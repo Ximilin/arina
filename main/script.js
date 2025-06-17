@@ -1,4 +1,39 @@
-
+document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.querySelector('.gallery__slider');
+        const slides = document.querySelectorAll('.gallery__slide');
+        const prevBtn = document.querySelector('.gallery__slider-prev');
+        const nextBtn = document.querySelector('.gallery__slider-next');
+        
+        let currentIndex = 0;
+        const slideWidth = slides[0].offsetWidth;
+        
+        function updateSlider() {
+            slider.scrollTo({
+                left: currentIndex * slideWidth,
+                behavior: 'smooth'
+            });
+        }
+        
+        prevBtn.addEventListener('click', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            if (currentIndex < slides.length - 3) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+        
+        // Для адаптивности
+        window.addEventListener('resize', function() {
+            slideWidth = slides[0].offsetWidth;
+            updateSlider();
+        });
+    });
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const burger = document.getElementById('burger');
@@ -218,5 +253,28 @@ const testimonialsSlider = document.querySelector('.testimonials__slider');
     // Responsive adjustments
     window.addEventListener('resize', function() {
         updateGallerySlider();
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const testimonialSlider = new Swiper('.testimonials__slider', {
+        loop: true,
+        effect: 'slide',
+        speed: 800,
+        grabCursor: true,
+        navigation: {
+            nextEl: '.testimonials__slider-next',
+            prevEl: '.testimonials__slider-prev',
+        },
+        pagination: {
+            el: '.testimonials__pagination',
+            clickable: true,
+            renderBullet: function(index, className) {
+                return `<span class="${className}"></span>`;
+            },
+        },
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
     });
 });
